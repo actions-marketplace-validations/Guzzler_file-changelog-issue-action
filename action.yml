@@ -1,0 +1,9 @@
+name: pr-changelog
+description: Add all files of the PR to a common change log with the current owner,number and timestamp.
+author: "Sharang Pai <sharangpai123@gmail.com>"
+branding:
+  icon: 'git-pull-request'
+  color: 'blue'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
