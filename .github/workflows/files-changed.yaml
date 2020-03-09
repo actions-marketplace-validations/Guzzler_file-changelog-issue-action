@@ -1,4 +1,4 @@
-name: PR size check
+name: PR Changelog Addition
 on:
   pull_request:
     types:
