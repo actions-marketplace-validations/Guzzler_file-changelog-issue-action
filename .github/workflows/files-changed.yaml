@@ -11,6 +11,6 @@ jobs:
   add_to_changelog:
     runs-on: ubuntu-latest
     steps:
-    - uses: guzzler/hello-github-actions@master
+    - uses: guzzler/file-changelog-issue-action@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
