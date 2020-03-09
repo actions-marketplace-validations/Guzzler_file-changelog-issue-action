@@ -1,6 +1,6 @@
 # GitHub Action PR Changelog Add
 
-A GitHub Action for adding the files changed for every PR when the PR is made as a reply to the top comment so it can be added easily.
+A GitHub Action for adding the files changed for every PR when the PR is made by creating an issue.
 
 ## Usage
 
