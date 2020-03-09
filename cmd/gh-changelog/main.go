@@ -67,7 +67,7 @@ func main() {
 
 	successfullyAdded, err := commentChangeLogChanges(ctx, client, owner, repo, number)
 	if err != nil {
-		logger.Fatal("Could not get pull request size", zap.Error(err))
+		logger.Fatal("Could not get createIssue", zap.Error(err))
 	}
 	logger.Info(fmt.Sprintf("The files were added with status %t to the change log", successfullyAdded))
 }
