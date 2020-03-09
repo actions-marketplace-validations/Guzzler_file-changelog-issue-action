@@ -65,7 +65,7 @@ func main() {
 	}
 	client := github.NewClient(tc)
 
-	successfullyAdded, err := commentChangeLogChanges(ctx, client, owner, repo, number)
+	successfullyAdded, err := createChangeLogIssue(ctx, client, owner, repo, number)
 	if err != nil {
 		logger.Fatal("Could not get createIssue", zap.Error(err))
 	}
