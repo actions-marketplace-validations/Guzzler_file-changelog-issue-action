@@ -57,6 +57,8 @@ func commentChangeLogChanges(
 		printableString = fmt.Sprintf("%s %s\n", printableString, file)
 	}
 	prOptions := new(github.PullRequestListCommentsOptions)
+	prOptions.ListOptions.Page = 1
+	prOptions.ListOptions.PerPage = 1
 	oldPRComments, _, err := client.PullRequests.ListComments(ctx, owner, repo, number, prOptions)
 	if _, _, err := client.PullRequests.CreateCommentInReplyTo(ctx, owner, repo, number, printableString, *oldPRComments[0].ID); err != nil {
 		return false, fmt.Errorf("get all commit files: %w", err)
