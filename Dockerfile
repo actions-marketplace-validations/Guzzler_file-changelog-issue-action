@@ -5,7 +5,7 @@ RUN CGO_ENABLED=0 GOOS=linux GO111MODULE=on \
   go build \
   -a \
   -o /bin/pr-changelog \
-  /src/github.com/Guzzler/hello-github-actions/cmd/hello-github-actions/
+  /src/github.com/Guzzler/hello-github-actions/cmd/gh-changelog/
 
 FROM alpine:3.9 as certs-installer
 RUN apk add --update ca-certificates
