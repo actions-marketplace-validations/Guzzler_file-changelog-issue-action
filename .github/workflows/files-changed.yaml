@@ -8,9 +8,9 @@ on:
     - labeled
     - unlabeled
 jobs:
-  check_pr_size:
+  add_to_changelog:
     runs-on: ubuntu-latest
     steps:
-    - uses: guzzler/hello-github-actions@v1.0.0
+    - uses: guzzler/hello-github-actions@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
