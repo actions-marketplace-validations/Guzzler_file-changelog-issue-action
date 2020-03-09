@@ -11,7 +11,7 @@ FROM alpine:3.9 as certs-installer
 RUN apk add --update ca-certificates
 
 FROM scratch
-COPY --from=builder /bin/pr-size /bin/pr-changelog
+COPY --from=builder /bin/pr-changelog /bin/pr-changelog
 COPY --from=certs-installer /etc/ssl/certs /etc/ssl/certs
 ENTRYPOINT ["/bin/pr-changelog"]
 CMD [""]
