@@ -1,4 +1,4 @@
-module github.com/Guzzler/hello-github-actions
+module github.com/guzzler/hello-github-actions
 
 go 1.14
 

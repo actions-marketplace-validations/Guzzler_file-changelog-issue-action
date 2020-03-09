@@ -11,6 +11,6 @@ jobs:
   check_pr_size:
     runs-on: ubuntu-latest
     steps:
-    - uses: Guzzler/hello-github-actions@v1.0.0
+    - uses: guzzler/hello-github-actions@v1.0.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
