@@ -43,7 +43,7 @@ func getAllPullRequestFiles(
 }
 
 // addToChangeLog appends the files to the changelog file and adds the file to the commit.
-func commentChangeLogChanges(
+func createChangeLogIssue(
 	ctx context.Context,
 	client *github.Client,
 	owner, repo string,
@@ -58,18 +58,12 @@ func commentChangeLogChanges(
 	for _, file := range files {
 		printableString = fmt.Sprintf("%s %s\n", printableString, *file.Filename)
 	}
-	prOptions := new(github.ListOptions)
-	prOptions.Page = 1
-	prOptions.PerPage = 1
-	allCommits, _, err := client.PullRequests.ListCommits(ctx, owner, repo, number, prOptions)
-	prComment := new(github.PullRequestComment)
-	lineToComment := 1
-	prComment.Body = &printableString
-	prComment.CommitID = allCommits[0].SHA
-	prComment.Line = &lineToComment
-	prComment.Path = files[0].Filename
-	if _, _, err := client.PullRequests.CreateComment(ctx, owner, repo, number, prComment); err != nil {
-		return false, fmt.Errorf("get all commit files: %w", err)
+	newIssue := new(github.IssueRequest)
+	presetTitle := fmt.Sprintf("\nChange Log Additions at %s for PR #%d:", currentTime, number)
+	newIssue.Title = &presetTitle
+	newIssue.Body = &printableString
+	if _, _, err := client.Issues.Create(ctx, owner, repo, newIssue); err != nil {
+		return false, fmt.Errorf("Could not create Issue: %w", err)
 	}
 	return true, nil
 }
