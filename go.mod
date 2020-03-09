@@ -1,4 +1,4 @@
-module github.com/guzzler/hello-github-actions
+module github.com/guzzler/file-changelog-issue-action
 
 go 1.14
 

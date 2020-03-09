@@ -14,7 +14,7 @@ jobs:
     - uses: actions/checkout@master
     - uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: ${{ github.repository }}/hello-github-actions
+        name: ${{ github.repository }}/file-changelog-issue-action
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
