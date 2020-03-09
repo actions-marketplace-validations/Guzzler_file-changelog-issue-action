@@ -31,7 +31,6 @@ func main() {
 	}
 
 	eventPath := os.Getenv("GITHUB_EVENT_PATH")
-	changeLogPath := "./changelog.txt"
 	if eventPath == "" {
 		logger.Fatal("Environment variable GITHUB_EVENT_PATH is mandatory")
 	}
@@ -66,7 +65,7 @@ func main() {
 	}
 	client := github.NewClient(tc)
 
-	successfullyAdded, err := addToChangeLog(ctx, client, owner, repo, changeLogPath, number)
+	successfullyAdded, err := commentChangeLogChanges(ctx, client, owner, repo, number)
 	if err != nil {
 		logger.Fatal("Could not get pull request size", zap.Error(err))
 	}

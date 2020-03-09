@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"os"
 
 	"github.com/google/go-github/v29/github"
 
@@ -43,28 +42,23 @@ func getAllPullRequestFiles(
 }
 
 // addToChangeLog appends the files to the changelog file and adds the file to the commit.
-func addToChangeLog(
+func commentChangeLogChanges(
 	ctx context.Context,
 	client *github.Client,
-	owner, repo, changeLogPath string,
+	owner, repo string,
 	number int,
 ) (bool, error) {
 	files, err := getAllPullRequestFiles(ctx, client, owner, repo, number)
 	if err != nil {
 		return false, fmt.Errorf("get all commit files: %w", err)
 	}
-
-	f, err := os.OpenFile("text.log",
-		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err != nil {
-		return false, fmt.Errorf("openLogFile: %w", err)
-	}
-	defer f.Close()
-	printableString := fmt.Sprintf("\nOwner: %s\n Number: %d\nFiles Changed:\n", owner, number)
+	printableString := fmt.Sprintf("\nTo be added to change Log: \n Owner: %s\n Number: %d\nFiles Changed:\n", owner, number)
 	for _, file := range files {
 		printableString = fmt.Sprintf("%s %s\n", printableString, file)
 	}
-	if _, err := f.WriteString(printableString); err != nil {
+	pullRequestComment := new(github.PullRequestComment)
+	pullRequestComment.Body = &printableString
+	if _, _, err := client.PullRequests.CreateComment(ctx, owner, repo, number, pullRequestComment); err != nil {
 		return false, fmt.Errorf("get all commit files: %w", err)
 	}
 	return true, nil
