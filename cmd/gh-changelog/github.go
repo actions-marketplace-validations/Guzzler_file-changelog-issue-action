@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/google/go-github/v29/github"
 
@@ -52,15 +53,22 @@ func commentChangeLogChanges(
 	if err != nil {
 		return false, fmt.Errorf("get all commit files: %w", err)
 	}
-	printableString := fmt.Sprintf("\nTo be added to change Log: \n Owner: %s\n Number: %d\nFiles Changed:\n", owner, number)
+	currentTime := time.Now().String()
+	printableString := fmt.Sprintf("\nTo be added to change Log on %s: \n Owner: %s\n Number: %d\nFiles Changed:\n", currentTime, owner, number)
 	for _, file := range files {
-		printableString = fmt.Sprintf("%s %s\n", printableString, file)
+		printableString = fmt.Sprintf("%s %s\n", printableString, *file.Filename)
 	}
-	prOptions := new(github.PullRequestListCommentsOptions)
-	prOptions.ListOptions.Page = 1
-	prOptions.ListOptions.PerPage = 1
-	oldPRComments, _, err := client.PullRequests.ListComments(ctx, owner, repo, number, prOptions)
-	if _, _, err := client.PullRequests.CreateCommentInReplyTo(ctx, owner, repo, number, printableString, *oldPRComments[0].ID); err != nil {
+	prOptions := new(github.ListOptions)
+	prOptions.Page = 1
+	prOptions.PerPage = 1
+	allCommits, _, err := client.PullRequests.ListCommits(ctx, owner, repo, number, prOptions)
+	prComment := new(github.PullRequestComment)
+	lineToComment := 1
+	prComment.Body = &printableString
+	prComment.CommitID = allCommits[0].SHA
+	prComment.Line = &lineToComment
+	prComment.Path = files[0].Filename
+	if _, _, err := client.PullRequests.CreateComment(ctx, owner, repo, number, prComment); err != nil {
 		return false, fmt.Errorf("get all commit files: %w", err)
 	}
 	return true, nil

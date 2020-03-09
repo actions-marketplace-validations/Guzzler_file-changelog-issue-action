@@ -1,6 +1,6 @@
 # GitHub Action PR Changelog Add
 
-A GitHub Action for adding the files changed for every PR when the PR is made.
+A GitHub Action for adding the files changed for every PR when the PR is made as a reply to the top comment so it can be added easily.
 
 ## Usage
 
@@ -29,4 +29,4 @@ jobs:
 [MIT License](./LICENSE)
 
 Copyright (c) 2020 Sharang Pai <sharangpai123@gmail.com>
-ABC
+ABCD
