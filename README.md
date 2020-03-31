@@ -20,7 +20,7 @@ jobs:
   check_pr_size:
     runs-on: ubuntu-latest
     steps:
-    - uses: Guzzler/gh-changelog@v1.0.0
+    - uses: guzzler/file-changelog-issue-action@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
